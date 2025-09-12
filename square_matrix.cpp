@@ -1,11 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void get_matrix(char matrix[][4], int y);
+void get_matrix(char* matrix, int y);
 void print_matrix(char matrix[][4], int y, size_t n);
 void print_max_and_min_item(char matrix[][4], int y, size_t n);
 void print_product_of_matrices(char matrix1[][4], char matrix2[][4], int y1, int y2);
 void item_value(char matrix1[][4], char matrix2[][4], int y2, int i, int j);
+
+// get_matrix -> int*, x, y (структура)
+
+
+// int* matrix, size_t size_x, size_y, x, y
+// matrix[size_x*y + x] = 5
+int * func(int *matrix, size_t size_x, int x, int y)
+{
+    return &matrix[size_x*y + x];
+}
 
 int main()
 { 
@@ -88,3 +98,7 @@ void item_value(char matrix1[][4], char matrix2[][4], int y2, int i, int j)
     }
     printf("%3d ", item_value);
 }
+
+void solve(double a, double b, double c);
+
+//функцияб возвращающая рез перемножения матриц, возвр новую матрицу, созд вне функции
