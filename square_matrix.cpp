@@ -9,7 +9,7 @@ struct min_and_max_items get_max_and_min_item(int *matrix, int y, int x);
 void print_max_and_min_item(struct min_and_max_items extreme_elements, size_t n);
 int *create_product_of_matrices(int y1, int x2);
 int *get_product_of_matrices(int *matrix_product, int *matrix1, int *matrix2, int y2, int y1, int x2);
-int get_single_element_of_product_matrix(int *matrix1, int *matrix2, int y2, int x2, int i, int j);
+int get_single_element_of_product_matrix(const int *matrix1, const int *matrix2, int y2, int x2, int i, int j);
 
 struct matrix_parameters
 {
@@ -23,7 +23,7 @@ struct min_and_max_items
     int min_item;
     int max_item;
 };
-
+ 
 int main()
 {
     struct matrix_parameters matrix1_par = get_matrix();
@@ -137,7 +137,7 @@ int *get_product_of_matrices(int *matrix_product, int *matrix1, int *matrix2, in
     return matrix_product;
 }
 
-int get_single_element_of_product_matrix(int *matrix1, int *matrix2, int y2, int x2, int i, int j)
+int get_single_element_of_product_matrix(const int *matrix1, const int *matrix2, int y2, int x2, int i, int j)
 {
     assert(matrix1 != NULL);
     assert(matrix2 != NULL);
