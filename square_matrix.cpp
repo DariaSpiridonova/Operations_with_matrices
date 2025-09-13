@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int *func(int *matrix, size_t size_x, int x, int y);
 struct matrix_parameters get_matrix(void);
 void print_matrix(int *matrix, int y, int x, size_t n);
-struct min_and_max_items get_max_and_min_item(int *matrix, int y, int x, size_t n);
+struct min_and_max_items get_max_and_min_item(int *matrix, int y, int x);
 void print_max_and_min_item(struct min_and_max_items extreme_elements, size_t n);
 int *create_product_of_matrices(int y1, int x2);
 int *get_product_of_matrices(int *matrix_product, int *matrix1, int *matrix2, int y2, int y1, int x2);
@@ -30,8 +31,8 @@ int main()
     print_matrix(matrix1_par.matrix, matrix1_par.y, matrix1_par.x, 1);
     print_matrix(matrix2_par.matrix, matrix2_par.y, matrix2_par.x, 2);
 
-    print_max_and_min_item(get_max_and_min_item(matrix1_par.matrix, matrix1_par.y, matrix1_par.x, 1), 1);
-    print_max_and_min_item(get_max_and_min_item(matrix2_par.matrix, matrix2_par.y, matrix2_par.x, 2), 2);
+    print_max_and_min_item(get_max_and_min_item(matrix1_par.matrix, matrix1_par.y, matrix1_par.x), 1);
+    print_max_and_min_item(get_max_and_min_item(matrix2_par.matrix, matrix2_par.y, matrix2_par.x), 2);
 
     int *product_of_matrices = get_product_of_matrices(create_product_of_matrices(matrix1_par.y, matrix2_par.x), matrix1_par.matrix, matrix2_par.matrix, matrix2_par.y, matrix1_par.y, matrix2_par.x);
 
@@ -81,11 +82,11 @@ void print_matrix(int *matrix, int y, int x, size_t n)
     }
 }
 
-struct min_and_max_items get_max_and_min_item(int *matrix, int y, int x, size_t n)
+struct min_and_max_items get_max_and_min_item(int *matrix, int y, int x)
 {
     struct min_and_max_items extreme_elements;
-    char min_item = *matrix;
-    char max_item = *matrix;
+    int min_item = *matrix;
+    int max_item = *matrix;
 
     for (int i = 0; i < y; i++)
     {
