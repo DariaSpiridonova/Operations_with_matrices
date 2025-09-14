@@ -38,6 +38,10 @@ int main()
     int *product_of_matrices = get_product_of_matrices(create_product_of_matrices(matrix1_par.y, matrix2_par.x), matrix1_par.matrix, matrix2_par.matrix, matrix2_par.y, matrix1_par.y, matrix2_par.x);
 
     print_matrix(product_of_matrices, matrix1_par.y, matrix2_par.x, 3);
+
+    free(matrix1_par.matrix);
+    free(matrix2_par.matrix);
+    free(create_product_of_matrices(matrix1_par.y, matrix2_par.x));
 }
 
 int *get_ptr_on_element_of_matrix(int *matrix, size_t size_x, int x, int y)
