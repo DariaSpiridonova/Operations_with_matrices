@@ -4,8 +4,8 @@
 
 int *get_ptr_on_element_of_matrix(int *matrix, size_t size_x, int x, int y);
 struct matrix_parameters get_matrix(void);
-void print_matrix(int *matrix, int y, int x, size_t n);
-struct min_and_max_items get_max_and_min_item(int *matrix, int y, int x);
+void print_matrix(struct matrix_parameters matrix_par, size_t n);
+struct min_and_max_items get_max_and_min_item(struct matrix_parameters matrix_par);
 void print_max_and_min_item(struct min_and_max_items extreme_elements, size_t n);
 int *create_product_of_matrices(int y1, int x2);
 int *get_product_of_matrices(int *matrix_product, int *matrix1, int *matrix2, int y2, int y1, int x2);
@@ -29,15 +29,16 @@ int main()
     struct matrix_parameters matrix1_par = get_matrix();
     struct matrix_parameters matrix2_par = get_matrix();
 
-    print_matrix(matrix1_par.matrix, matrix1_par.y, matrix1_par.x, 1);
-    print_matrix(matrix2_par.matrix, matrix2_par.y, matrix2_par.x, 2);
+    print_matrix(matrix1_par, 1);
+    print_matrix(matrix2_par, 2);
 
-    print_max_and_min_item(get_max_and_min_item(matrix1_par.matrix, matrix1_par.y, matrix1_par.x), 1);
-    print_max_and_min_item(get_max_and_min_item(matrix2_par.matrix, matrix2_par.y, matrix2_par.x), 2);
+    print_max_and_min_item(get_max_and_min_item(matrix1_par), 1);
+    print_max_and_min_item(get_max_and_min_item(matrix2_par), 2);
 
     int *product_of_matrices = get_product_of_matrices(create_product_of_matrices(matrix1_par.y, matrix2_par.x), matrix1_par.matrix, matrix2_par.matrix, matrix2_par.y, matrix1_par.y, matrix2_par.x);
+    struct matrix_parameters product_of_matrices_par = {product_of_matrices, matrix2_par.x, matrix1_par.y};
 
-    print_matrix(product_of_matrices, matrix1_par.y, matrix2_par.x, 3);
+    print_matrix(product_of_matrices_par, 3);
 
     free(matrix1_par.matrix);
     free(matrix2_par.matrix);
@@ -73,35 +74,35 @@ struct matrix_parameters get_matrix(void)
     return matrix_n;
 }
 
-void print_matrix(int *matrix, int y, int x, size_t n)
+void print_matrix(struct matrix_parameters matrix_par, size_t n)
 {
-    assert(matrix != NULL);
+    assert(matrix_par.matrix != NULL);
 
     printf("Матрица №%d\n", n);
-    for (int i = 0; i < y; i++)
+    for (int i = 0; i < matrix_par.y; i++)
     {
-        for (int j = 0; j < x; j++)
+        for (int j = 0; j < matrix_par.x; j++)
         {
-            printf("%d ", *get_ptr_on_element_of_matrix(matrix, x, j, i));
+            printf("%d ", *get_ptr_on_element_of_matrix((int*)matrix_par.matrix, matrix_par.x, j, i));
         }
         printf("\n");
     }
 }
 
-struct min_and_max_items get_max_and_min_item(int *matrix, int y, int x)
+struct min_and_max_items get_max_and_min_item(struct matrix_parameters matrix_par)
 {
-    assert(matrix != NULL);
+    assert(matrix_par.matrix != NULL);
 
     struct min_and_max_items extreme_elements;
-    int min_item = *matrix;
-    int max_item = *matrix;
+    int min_item = *matrix_par.matrix;
+    int max_item = *matrix_par.matrix;
 
-    for (int i = 0; i < y * x; i++)
+    for (int i = 0; i < matrix_par.y * matrix_par.x; i++)
     {
-        if (matrix[i] > max_item)
-            max_item = matrix[i];
-        if (matrix[i] < min_item)
-            min_item = matrix[i];
+        if (matrix_par.matrix[i] > max_item)
+            max_item = matrix_par.matrix[i];
+        if (matrix_par.matrix[i] < min_item)
+            min_item = matrix_par.matrix[i];
     }
 
     extreme_elements.min_item = min_item;
@@ -149,7 +150,7 @@ int get_single_element_of_product_matrix(const int *matrix1, const int *matrix2,
     int value_of_single_element = 0;
     for (int t = 0; t < y2; t++)
     {
-        value_of_single_element += (*get_ptr_on_element_of_matrix(matrix1, y2, t, i)) * (*get_ptr_on_element_of_matrix(matrix2, x2, j, t));
+        value_of_single_element += (*get_ptr_on_element_of_matrix((int *)matrix1, y2, t, i)) * (*get_ptr_on_element_of_matrix((int *)matrix2, x2, j, t));
     }
     return value_of_single_element;
 }

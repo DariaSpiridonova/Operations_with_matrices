@@ -4,8 +4,8 @@
 
 int num_of_elements(int y);
 struct matrix_parameters get_matrix(void);
-void print_matrix(int *matrix, int y);
-struct min_and_max_items get_max_and_min_item(int *matrix, int y);
+void print_matrix(struct matrix_parameters matrix_par);
+struct min_and_max_items get_max_and_min_item(struct matrix_parameters matrix_par);
 void print_max_and_min_item(struct min_and_max_items extreme_elements);
 
 struct matrix_parameters
@@ -24,9 +24,9 @@ int main()
 {
     struct matrix_parameters matrix_par = get_matrix();
 
-    print_matrix(matrix_par.matrix, matrix_par.y);
+    print_matrix(matrix_par);
 
-    print_max_and_min_item(get_max_and_min_item(matrix_par.matrix, matrix_par.y));
+    print_max_and_min_item(get_max_and_min_item(matrix_par));
 
     free(matrix_par.matrix);
 
@@ -58,35 +58,35 @@ struct matrix_parameters get_matrix(void)
     return matrix_n;
 }
 
-void print_matrix(int *matrix, int y)
+void print_matrix(struct matrix_parameters matrix_par)
 {
-    assert(matrix != NULL);
+    assert(matrix_par.matrix != NULL);
 
     printf("Треугольная матрица\n");
-    for (int i = 0; i < y; i++)
+    for (int i = 0; i < matrix_par.y; i++)
     {
         for (int j = 0; j < i + 1; j++)
         {
-            printf("%d ", matrix[num_of_elements(i) + j]);
+            printf("%d ", matrix_par.matrix[num_of_elements(i) + j]);
         }
         printf("\n");
     }
 }
 
-struct min_and_max_items get_max_and_min_item(int *matrix, int y)
+struct min_and_max_items get_max_and_min_item(struct matrix_parameters matrix_par)
 {
-    assert(matrix != NULL);
+    assert(matrix_par.matrix != NULL);
 
     struct min_and_max_items extreme_elements;
-    int min_item = *matrix;
-    int max_item = *matrix;
+    int min_item = *matrix_par.matrix;
+    int max_item = *matrix_par.matrix;
 
-    for (int i = 0; i < num_of_elements(y); i++)
+    for (int i = 0; i < num_of_elements(matrix_par.y); i++)
     {
-        if (matrix[i] > max_item)
-            max_item = matrix[i];
-        if (matrix[i] < min_item)
-            min_item = matrix[i];
+        if (matrix_par.matrix[i] > max_item)
+            max_item = matrix_par.matrix[i];
+        if (matrix_par.matrix[i] < min_item)
+            min_item = matrix_par.matrix[i];
     }
 
     extreme_elements.min_item = min_item;
